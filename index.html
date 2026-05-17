@@ -130,6 +130,11 @@
     box-shadow: 0 40px 80px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.05);
     position: relative; z-index: 2;
   }
+  .hero-screenshot {
+    width: 260px; height: 520px; object-fit: cover; object-position: top center;
+    border-radius: 34px; box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+    position: relative; z-index: 2;
+  }
   .phone-screen {
     width: 100%; height: 100%; background: #f0f0f0;
     border-radius: 30px; overflow: hidden;
@@ -188,7 +193,7 @@
   }
   .phone-nav span { font-size: 7px; color: #aaa; text-align: center; }
   .visual-badge {
-    position: absolute; right: -20px; top: 80px;
+    position: absolute; right: 18px; top: 170px;
     background: white; border-radius: 14px; padding: 10px 14px;
     box-shadow: var(--shadow-hover); font-size: 0.75rem;
     display: flex; align-items: center; gap: 8px; z-index: 3;
@@ -253,9 +258,19 @@
     text-decoration: none; color: inherit; display: block;
   }
   .work-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
-  .work-card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 400px; }
+  .work-card.disabled {
+    cursor: not-allowed; opacity: 0.6;
+    background: var(--surface-alt);
+    border-color: rgba(0,0,0,0.06);
+    filter: grayscale(0.35);
+  }
+  .work-card.disabled:hover { box-shadow: none; transform: none; }
+  .work-card.disabled .work-title,
+  .work-card.disabled .work-desc,
+  .work-card.disabled .tag { color: var(--ink-muted); }
+  .work-card.featured { grid-column: auto; display: block; }
   .work-thumb {
-    height: 220px; overflow: hidden; position: relative;
+    display: none; height: 220px; overflow: hidden; position: relative;
     background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
   }
   .work-card.featured .work-thumb { height: 100%; min-height: 280px; }
@@ -267,13 +282,13 @@
   .work-thumb-pay { background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%); }
   .work-thumb-order { background: linear-gradient(135deg, #b71c1c 0%, #e53935 100%); }
   .work-thumb-mart { background: linear-gradient(135deg, #e65100 0%, #ff9800 100%); }
-  .work-card-body { padding: 1.5rem 1.75rem; }
-  .work-card.featured .work-card-body { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .work-card-body { padding: 1.75rem; min-height: 260px; display: flex; flex-direction: column; }
+  .work-card.featured .work-card-body { padding: 1.75rem; display: flex; flex-direction: column; justify-content: flex-start; }
   .work-num { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-muted); margin-bottom: 0.5rem; }
   .work-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.25; }
-  .work-card.featured .work-title { font-size: 1.6rem; margin-bottom: 0.75rem; }
+  .work-card.featured .work-title { font-size: 1.2rem; margin-bottom: 0.5rem; }
   .work-desc { font-size: 0.875rem; color: var(--ink-secondary); line-height: 1.6; margin-bottom: 1rem; }
-  .work-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+  .work-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
   .tag {
     font-size: 0.7rem; padding: 0.25rem 0.65rem; border-radius: 100px;
     background: var(--surface-alt); color: var(--ink-secondary);
@@ -285,13 +300,184 @@
     border: 1px solid var(--accent-warm); border-radius: 100px;
     padding: 0.2rem 0.6rem; margin-bottom: 1rem;
   }
+  .upcoming-badge {
+    display: inline-block; font-family: var(--mono); font-size: 0.65rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted);
+    border: 1px solid var(--border-strong); border-radius: 100px;
+    padding: 0.2rem 0.6rem; margin-bottom: 1rem;
+    background: var(--surface-alt);
+  }
+
+  /* ── CASE STUDY PAGE ── */
+  #case-study-page { display: none; min-height: 100vh; padding-top: 64px; background: linear-gradient(180deg, #fbfbf8 0%, var(--surface) 45%, #f4f3ef 100%); }
+  #case-study-page.active { display: block; }
+  .case-wrap { max-width: 1120px; margin: 0 auto; padding: 3rem 3rem 6rem; }
+  .case-back {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-size: 0.825rem; color: var(--ink-secondary); text-decoration: none;
+    margin-bottom: 2rem; transition: all 0.2s; cursor: pointer;
+    background: rgba(255,255,255,0.72); border: 1px solid var(--border);
+    border-radius: 100px; font-family: var(--sans); padding: 0.55rem 0.9rem;
+    box-shadow: var(--shadow);
+  }
+  .case-back:hover { color: var(--ink); transform: translateX(-2px); }
+  .case-header {
+    margin-bottom: 2rem;
+  }
+  .case-badge {
+    display: inline-block; font-family: var(--mono); font-size: 0.65rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-warm);
+    background: rgba(200,169,110,0.12); border: 1px solid rgba(200,169,110,0.24);
+    border-radius: 100px; padding: 0.35rem 0.85rem; margin-bottom: 1.2rem;
+  }
+  .case-title {
+    font-family: var(--serif); font-size: clamp(2.6rem, 5vw, 4.6rem);
+    font-weight: 700; line-height: 1.02; letter-spacing: -0.04em;
+    margin-bottom: 1.25rem; max-width: 980px;
+  }
+  .case-subtitle {
+    max-width: 760px; font-size: 1.05rem; line-height: 1.75;
+    color: var(--ink-secondary); font-weight: 300;
+  }
+  .case-meta {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+    margin-bottom: 2.25rem;
+  }
+  .case-meta > div {
+    background: rgba(255,255,255,0.72); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.1rem; box-shadow: var(--shadow);
+  }
+  .case-meta-label {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.35rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .case-meta-val { font-size: 0.95rem; font-weight: 500; color: var(--ink); line-height: 1.5; }
+  .case-hero {
+    width: 100%; border-radius: var(--radius-lg); min-height: 360px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4rem; overflow: hidden; position: relative;
+  }
+  .case-hero-grab { background: linear-gradient(135deg, #1a5c3e 0%, #00b14f 100%); }
+  .case-hero-pay { background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%); }
+  .case-hero-order { background: linear-gradient(135deg, #b71c1c 0%, #e53935 100%); }
+  .case-hero-mart { background: linear-gradient(135deg, #e65100 0%, #ff9800 100%); }
+  .case-hero-visual { font-size: 5rem; opacity: 0.9; }
+  .case-video {
+    width: 100%; height: auto;
+    display: block;
+    border-radius: 34px; box-shadow: 0 28px 70px rgba(0,0,0,0.14);
+  }
+  .case-video-wrap {
+    width: 260px; max-width: 100%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    justify-self: center;
+  }
+  .case-video-label {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-muted); margin-top: 0.85rem;
+  }
+  .case-media-split {
+    display: grid; grid-template-columns: repeat(2, 260px);
+    justify-content: center; gap: 2rem;
+  }
+  .case-media-split .case-video-wrap { width: 260px; }
+  .case-overview-split {
+    display: grid; grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 3rem; align-items: center;
+    background: rgba(255,255,255,0.76); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 2rem 2.25rem;
+    box-shadow: var(--shadow); margin-bottom: 2.5rem; width: 100%;
+  }
+  .case-hero-phones {
+    display: flex; gap: 1rem; align-items: center; justify-content: center;
+    padding: 2rem; flex-wrap: wrap;
+  }
+  .case-phone {
+    width: 72px; height: 140px; background: white; border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2); transform: rotate(-8deg);
+    border: 3px solid rgba(255,255,255,0.3);
+  }
+  .case-phone:nth-child(2) { transform: rotate(4deg) scale(1.08); }
+  .case-phone:nth-child(3) { transform: rotate(12deg); }
+  .case-section { margin-bottom: 1.25rem; width: 100%; }
+  .case-section:not(.case-overview-split) {
+    background: rgba(255,255,255,0.76); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 2rem 2.25rem;
+    box-shadow: var(--shadow);
+  }
+  .case-section-head {
+    display: flex; justify-content: space-between; align-items: end;
+    gap: 1rem; margin-bottom: 1.25rem;
+  }
+  .case-section-kicker {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-warm); margin-bottom: 0.35rem;
+  }
+  .case-section-title {
+    font-family: var(--serif); font-size: 1.75rem; font-weight: 600;
+    margin-bottom: 0; color: var(--ink); letter-spacing: -0.02em;
+  }
+  .case-overview { font-size: 1.05rem; color: var(--ink-secondary); line-height: 1.85; font-weight: 300; max-width: 820px; }
+  .case-overview-split .case-overview { max-width: none; }
+  .case-impact-row {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem; margin-top: 1.5rem;
+  }
+  .case-impact-item {
+    background: var(--surface-alt); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 0.9rem 1rem;
+  }
+  .case-impact-value {
+    font-family: var(--serif); font-size: 1.35rem; line-height: 1;
+    font-weight: 700; color: var(--ink);
+  }
+  .case-impact-label {
+    font-family: var(--mono); font-size: 0.65rem; color: var(--ink-muted);
+    margin-top: 0.35rem; line-height: 1.4;
+  }
+  .case-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; width: 100%; }
+  .case-combined-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; width: 100%; }
+  .case-combined-card {
+    background: transparent; border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: none;
+  }
+  .case-combined-num {
+    font-family: var(--mono); font-size: 0.75rem; color: var(--accent-warm);
+    margin-bottom: 1rem; font-weight: 500;
+  }
+  .case-combined-block + .case-combined-block {
+    margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--border);
+  }
+  .case-combined-label {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.4rem;
+  }
+  .case-card {
+    background: rgba(255,255,255,0.82); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+    box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .case-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+  .case-card-icon { color: var(--accent-warm); font-size: 0.85rem; margin-bottom: 0.75rem; }
+  .case-card-num {
+    font-family: var(--mono); font-size: 0.75rem; color: var(--accent-warm);
+    margin-bottom: 0.75rem; font-weight: 500;
+  }
+  .case-card-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; line-height: 1.35; }
+  .case-card-desc { font-size: 0.875rem; color: var(--ink-secondary); line-height: 1.65; font-weight: 300; }
+  .case-solution-visual {
+    background: var(--surface-alt); border-radius: var(--radius);
+    height: 160px; margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; border: 1px solid var(--border);
+  }
 
   /* ── ABOUT ── */
   #about { background: var(--surface-alt); }
   .about-grid { display: grid; grid-template-columns: 1fr 360px; gap: 5rem; align-items: start; }
   .about-text p { font-size: 1.05rem; color: var(--ink-secondary); line-height: 1.8; margin-bottom: 1.25rem; font-weight: 300; }
   .about-text p strong { color: var(--ink); font-weight: 500; }
-  .about-sidebar {}
   .sidebar-card {
     background: var(--surface-card); border-radius: var(--radius);
     border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem;
@@ -301,8 +487,9 @@
   .company-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; }
   .company-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .grab-dot { background: #00b14f; }
-  .shopee-dot { background: #f44c05; }
-  .dbs-dot { background: #ee2e24; }
+  .carousell-dot { background: #e63946; }
+  .shopee-dot { background: #ee4d2d; }
+  .moovita-dot { background: #c8102e; }
   .skill-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .skill-pill {
     font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 100px;
@@ -313,10 +500,10 @@
   #resume-page { display: none; }
   #resume-page.active { display: block; min-height: 100vh; }
   .resume-hero {
-    background: var(--ink); color: white; padding: 8rem 3rem 4rem;
+    background: var(--ink); color: white; padding: 7rem 3rem 2.5rem;
   }
   .resume-hero-inner { max-width: 1100px; margin: 0 auto; }
-  .resume-title-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
+  .resume-title-row { display: flex; justify-content: space-between; align-items: flex-end; }
   .resume-name { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; letter-spacing: -0.02em; }
   .resume-name em { font-style: italic; font-weight: 400; opacity: 0.65; }
   .download-btn {
@@ -327,14 +514,8 @@
     font-family: var(--sans); white-space: nowrap; flex-shrink: 0;
   }
   .download-btn:hover { background: rgba(255,255,255,0.1); }
-  .resume-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .resume-meta-item { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 1.25rem; }
-  .resume-meta-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-bottom: 0.25rem; }
-  .resume-meta-val { font-size: 0.925rem; opacity: 0.9; }
 
-  .resume-body { max-width: 1100px; margin: 0 auto; padding: 4rem 3rem; display: grid; grid-template-columns: 1fr 300px; gap: 4rem; }
-  .resume-main {}
-  .resume-sidebar {}
+  .resume-body { max-width: 1100px; margin: 0 auto; padding: 3rem 3rem 4rem; display: grid; grid-template-columns: 1fr 300px; gap: 4rem; }
   .resume-section { margin-bottom: 3rem; }
   .resume-section-title {
     font-family: var(--serif); font-size: 1.3rem; font-weight: 600;
@@ -370,6 +551,26 @@
   }
   .impact-num { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--ink); }
   .impact-label { font-size: 0.7rem; color: var(--ink-muted); margin-top: 0.1rem; font-family: var(--mono); }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .about-stat-num { font-family: var(--serif); font-size: 1.75rem; font-weight: 700; color: var(--ink); line-height: 1.1; }
+  .about-stat-label { font-size: 0.75rem; color: var(--ink-muted); font-family: var(--mono); margin-top: 0.25rem; }
+  .exp-summary { font-size: 0.875rem; color: var(--ink-secondary); line-height: 1.7; margin-bottom: 0.75rem; font-weight: 300; }
+  .exp-projects-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.5rem; }
+  .exp-project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .exp-project-tag {
+    font-size: 0.75rem; padding: 0.25rem 0.65rem; border-radius: 100px;
+    background: var(--surface-alt); color: var(--ink-secondary); border: 1px solid var(--border);
+  }
+  .cert-item { margin-bottom: 1rem; }
+  .cert-name { font-weight: 500; font-size: 0.875rem; line-height: 1.4; }
+  .cert-org { font-size: 0.8rem; color: var(--ink-secondary); margin-top: 0.15rem; }
+  .cert-date { font-family: var(--mono); font-size: 0.7rem; color: var(--ink-muted); margin-top: 0.15rem; }
+  .lang-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); }
+  .lang-row:last-child { border-bottom: none; }
+  .lang-level { color: var(--ink-muted); font-family: var(--mono); font-size: 0.72rem; text-align: right; max-width: 55%; }
 
   /* Skills sidebar */
   .skill-section { margin-bottom: 2rem; }
@@ -424,12 +625,22 @@
     .work-card.featured { grid-column: auto; display: block; }
     .about-grid { grid-template-columns: 1fr; }
     .resume-body { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
-    .resume-hero { padding: 7rem 1.5rem 3rem; }
+    .resume-hero { padding: 6.5rem 1.5rem 2rem; }
     .resume-title-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .resume-meta { grid-template-columns: 1fr 1fr; }
     .stats-bar { grid-template-columns: 1fr; }
     .stat + .stat { border-left: none; border-top: 1px solid var(--border); }
     .impact-row { grid-template-columns: 1fr; }
+    .case-wrap { padding: 2rem 1.5rem 4rem; }
+    .case-meta { grid-template-columns: 1fr; gap: 1.25rem; }
+    .case-overview-split { grid-template-columns: 1fr; gap: 1.5rem; }
+    .case-video-wrap { width: min(260px, 100%); }
+    .case-media-split { grid-template-columns: 1fr; justify-items: center; gap: 1.5rem; }
+    .case-impact-row { grid-template-columns: 1fr; }
+    .case-grid-3 { grid-template-columns: 1fr; }
+    .case-combined-grid { grid-template-columns: 1fr; }
+    .case-hero { min-height: 240px; }
+    .case-section { margin-bottom: 1.25rem; }
+    .case-section:not(.case-overview-split) { padding: 1.5rem; }
   }
 </style>
 </head>
@@ -438,11 +649,8 @@
 <nav>
   <a class="nav-logo" href="#" onclick="showPage('main')">CO</a>
   <div class="nav-links">
-    <a href="#work" onclick="showPage('main')">Work</a>
-    <a href="#about" onclick="showPage('main')">About</a>
     <a href="#" onclick="showPage('resume')">Resume</a>
-    <a href="mailto:hello@chloeong.com">Contact</a>
-    <a class="nav-cta" href="mailto:hello@chloeong.com">Let's connect</a>
+    <a class="nav-cta" href="https://www.linkedin.com/in/chloe-ong-676745100/" target="_blank" rel="noopener noreferrer">Let's connect</a>
   </div>
 </nav>
 
@@ -459,28 +667,23 @@
             Chloe<br><em>Ong</em>
           </h1>
           <p class="hero-desc fade-up fade-up-delay-2">
-            Crafting scalable fintech, commerce, and ecosystem experiences for millions across Southeast Asia. Currently at Grab.
+            Designing high-scale fintech, commerce, and ecosystem products that turn complex user journeys into measurable growth. Currently leading product design at Grab.
           </p>
-          <div class="hero-actions fade-up fade-up-delay-3">
-            <a class="btn-primary" href="#work">View Case Studies →</a>
-            <a class="btn-secondary" href="#" onclick="showPage('resume')">Resume ↓</a>
-            <a class="btn-secondary" href="https://linkedin.com/in/chloeong" target="_blank">LinkedIn ↗</a>
-          </div>
-          <p class="hero-location fade-up fade-up-delay-4">
-            <span class="dot"></span> Singapore — Available for select opportunities
+          <p class="hero-location fade-up fade-up-delay-3">
+            <span class="dot"></span> Singapore
           </p>
 
           <div class="stats-bar">
             <div class="stat">
-              <span class="stat-num">8+</span>
+              <span class="stat-num">12+</span>
               <span class="stat-label">Years experience</span>
             </div>
             <div class="stat">
-              <span class="stat-num">10M+</span>
+              <span class="stat-num">30M+</span>
               <span class="stat-label">Users impacted</span>
             </div>
             <div class="stat">
-              <span class="stat-num">20+</span>
+              <span class="stat-num">1K+</span>
               <span class="stat-label">Projects shipped</span>
             </div>
           </div>
@@ -489,66 +692,13 @@
         <div class="hero-visual">
           <div class="hero-bg-ring2"></div>
           <div class="hero-bg-ring"></div>
-          <div class="phone-frame">
-            <div class="phone-screen">
-              <div class="phone-status">
-                <span>9:41</span><span>▐</span>
-              </div>
-              <div class="phone-content">
-                <div class="phone-grab-header">
-                  <span style="font-size:13px; font-weight:800;">Grab</span>
-                  <span>Good morning, Chloe! 🌿</span>
-                </div>
-                <div class="phone-search">
-                  <span>🔍</span><span>Search the Grab app</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;padding:6px 12px;align-items:center;">
-                  <span style="font-size:9px;font-weight:600;color:#333;">S$130.50</span>
-                  <span style="font-size:9px;color:#00b14f;">⭐ 3,300 Pts</span>
-                </div>
-                <div class="phone-icons">
-                  <div class="phone-icon"><div class="phone-icon-circle" style="background:#e8f5e9;">🚗</div><span>Transport</span></div>
-                  <div class="phone-icon"><div class="phone-icon-circle" style="background:#fff3e0;">🍔</div><span>Food</span></div>
-                  <div class="phone-icon"><div class="phone-icon-circle" style="background:#e3f2fd;">🛒</div><span>Mart</span></div>
-                  <div class="phone-icon"><div class="phone-icon-circle" style="background:#fce4ec;">⚡</div><span>Express</span></div>
-                  <div class="phone-icon"><div class="phone-icon-circle" style="background:#ede7f6;">💳</div><span>Finance</span></div>
-                  <div class="phone-icon"><div class="phone-icon-circle" style="background:#e8f5e9;">🛡️</div><span>Insurance</span></div>
-                  <div class="phone-icon"><div class="phone-icon-circle" style="background:#fff8e1;">🎁</div><span>Gift Cards</span></div>
-                  <div class="phone-icon"><div class="phone-icon-circle" style="background:#f3e5f5;">•••</div><span>More</span></div>
-                </div>
-                <div class="phone-banner">
-                  <strong>Ride more to unlock rewards</strong>
-                  <p>Earn 2x GrabRewards this weekend on selected rides</p>
-                </div>
-                <div class="phone-orders">
-                  <p>ORDER AGAIN</p>
-                  <div class="phone-order-item">
-                    <div class="phone-order-img">🍟</div>
-                    <div class="phone-order-info">
-                      <p style="font-weight:600;">McDonald's</p>
-                      <span>Your last order · 25% off</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="phone-nav">
-                <span>🏠<br>Home</span>
-                <span>🔥<br>Promos</span>
-                <span>📦<br>Orders</span>
-                <span>👤<br>Profile</span>
-              </div>
-            </div>
-          </div>
+          <img class="hero-screenshot" src="images/Home.png" alt="Grab app homepage screenshot">
 
           <div class="visual-badge">
-            <div>
-              <div class="num">+34%</div>
-              <div style="font-size:0.7rem;color:#888;">Engagement lift</div>
-            </div>
+            <div style="font-size:0.75rem;color:var(--ink);font-weight:600;">Uplift in BTR</div>
           </div>
           <div class="visual-badge2">
-            <div class="num2" style="color:white;">10M+</div>
-            <div style="font-size:0.7rem;opacity:0.7;">Users reached</div>
+            <div style="font-size:0.75rem;font-weight:600;">Uplift in engagement</div>
           </div>
         </div>
       </div>
@@ -560,25 +710,17 @@
     <div class="container">
       <div class="section-header">
         <div>
-          <p class="section-eyebrow">Selected Work</p>
+          <p class="section-eyebrow">Impact-led Work</p>
           <h2 class="section-title">Case Studies</h2>
         </div>
-        <a class="section-link" href="#">See all projects →</a>
       </div>
 
       <div class="work-grid">
-        <a class="work-card featured" href="#" onclick="return false;">
-          <div class="work-thumb work-thumb-grab" style="display:flex;align-items:center;justify-content:center;">
-            <div style="text-align:center;color:white;padding:2rem;">
-              <div style="font-size:2.5rem;margin-bottom:1rem;opacity:0.9;">📱</div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;opacity:0.6;text-transform:uppercase;">Grab · 2023–2024</div>
-            </div>
-          </div>
+        <a class="work-card featured" href="#" onclick="showProject('homepage'); return false;">
           <div class="work-card-body">
-            <span class="featured-badge">Featured Project</span>
             <div class="work-num">01</div>
-            <div class="work-title">Grab Homepage Ecosystem</div>
-            <div class="work-desc">Redesigning one of Southeast Asia's most complex superapp surfaces to improve discoverability, engagement, and ecosystem scalability across 8 markets.</div>
+            <div class="work-title">Grab Homepage Growth System</div>
+            <div class="work-desc">Redesigning Grab's most strategic discovery surface to grow engagement while protecting booking-through-rate across core services and 8 markets.</div>
             <div class="work-tags">
               <span class="tag">Platform Design</span>
               <span class="tag">Personalization</span>
@@ -588,29 +730,11 @@
           </div>
         </a>
 
-        <a class="work-card" href="#" onclick="return false;">
-          <div class="work-thumb work-thumb-pay">
-            <div class="work-thumb-inner">💳</div>
-          </div>
+        <a class="work-card" href="#" onclick="showProject('group-order'); return false;">
           <div class="work-card-body">
             <div class="work-num">02</div>
-            <div class="work-title">Grab Finance PaySDK</div>
-            <div class="work-desc">Building scalable payment infrastructure experiences that simplify complex financial journeys while maintaining user trust.</div>
-            <div class="work-tags">
-              <span class="tag">Fintech UX</span>
-              <span class="tag">Platform</span>
-            </div>
-          </div>
-        </a>
-
-        <a class="work-card" href="#" onclick="return false;">
-          <div class="work-thumb work-thumb-order">
-            <div class="work-thumb-inner">👥</div>
-          </div>
-          <div class="work-card-body">
-            <div class="work-num">03</div>
-            <div class="work-title">Group Order Experience</div>
-            <div class="work-desc">Reducing coordination friction in collaborative food ordering through simplified decision-making and real-time collaboration patterns.</div>
+            <div class="work-title">Group Order Collaboration Flow</div>
+            <div class="work-desc">Designing host and member journeys that reduce coordination friction, increase conversion, and grow average order value for shared meals.</div>
             <div class="work-tags">
               <span class="tag">Social UX</span>
               <span class="tag">Collaboration</span>
@@ -618,20 +742,53 @@
           </div>
         </a>
 
-        <a class="work-card" href="#" onclick="return false;">
-          <div class="work-thumb work-thumb-mart">
-            <div class="work-thumb-inner">🛒</div>
-          </div>
+        <a class="work-card" href="#" onclick="showProject('grabmart'); return false;">
           <div class="work-card-body">
-            <div class="work-num">04</div>
-            <div class="work-title">GrabMart Catalogue Experience</div>
-            <div class="work-desc">Optimizing catalogue discovery for high-intent grocery shopping behaviors across large-scale merchant ecosystems.</div>
+            <div class="work-num">03</div>
+            <div class="work-title">GrabMart Supermarket Catalogue</div>
+            <div class="work-desc">Re-architecting supermarket discovery so shoppers can scan, compare, and build baskets faster across dense SKU and promotion systems.</div>
             <div class="work-tags">
               <span class="tag">Commerce UX</span>
               <span class="tag">Discovery</span>
             </div>
           </div>
         </a>
+
+        <div class="work-card disabled" aria-disabled="true">
+          <div class="work-card-body">
+            <span class="upcoming-badge">Upcoming</span>
+            <div class="work-title">Grab Finance PaySDK</div>
+            <div class="work-desc">Confidential payment infrastructure project focused on scalable SDK patterns, trust, and partner integration quality.</div>
+            <div class="work-tags">
+              <span class="tag">Fintech UX</span>
+              <span class="tag">Platform</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card disabled" aria-disabled="true">
+          <div class="work-card-body">
+            <span class="upcoming-badge">Upcoming</span>
+            <div class="work-title">Overseas Scan-to-pay</div>
+            <div class="work-desc">Confidential cross-border payment experience designed to make overseas scan-to-pay feel trusted, fast, and locally relevant.</div>
+            <div class="work-tags">
+              <span class="tag">Fintech UX</span>
+              <span class="tag">Payments</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card disabled" aria-disabled="true">
+          <div class="work-card-body">
+            <span class="upcoming-badge">Upcoming</span>
+            <div class="work-title">New OVO Design</div>
+            <div class="work-desc">Confidential Indonesia finance app redesign and product architecture work focused on clarity, scale, and long-term platform flexibility.</div>
+            <div class="work-tags">
+              <span class="tag">Finance App</span>
+              <span class="tag">Re-architecture</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -642,12 +799,13 @@
       <div class="about-grid">
         <div>
           <p class="section-eyebrow">About me</p>
-          <h2 class="section-title" style="margin-bottom:2rem;">I design complex systems<br><em style="font-style:italic;font-family:'Playfair Display',serif;font-weight:400;">that simplify everyday decisions.</em></h2>
+          <h2 class="section-title" style="margin-bottom:2rem;">I design product systems<br><em style="font-style:italic;font-family:'Playfair Display',serif;font-weight:400;">that move users and metrics.</em></h2>
           <div class="about-text">
-            <p>My work focuses on <strong>fintech, commerce ecosystems, growth experiences</strong>, and scalable consumer platforms across Southeast Asia — designing for the nuances of diverse markets while building systems robust enough to scale.</p>
-            <p>Over the years, I've led initiatives spanning homepage ecosystems, payments infrastructure, collaborative ordering experiences, and platform-level design systems — always with an eye toward <strong>long-term scalability and meaningful user outcomes</strong>.</p>
-            <p>I enjoy solving high-ambiguity product challenges that require balancing user needs, business goals, technical constraints, and cross-functional stakeholder dynamics. The best design decisions I've made happened in the intersection of all four.</p>
-            <p>Before Grab, I designed for Shopee's marketplace and DBS Bank's digital banking platforms — experiences that shaped my approach to <strong>designing at scale with empathy</strong>.</p>
+            <p>I'm a Lead Product Designer with <strong>12+ years</strong> of experience turning ambiguous, high-stakes product problems into scalable systems across fintech, commerce, and ecosystem platforms.</p>
+            <p>At Grab, I lead design across homepage discovery, payments infrastructure, collaborative ordering, and supermarket commerce — balancing user intent, business growth, technical constraints, and operational scale for <strong>30M+ users</strong> across Southeast Asia.</p>
+            <p>My edge is connecting strategy to craft: defining the product direction, shaping the system architecture, validating through research and metrics, and partnering deeply with PM, engineering, data, marketing, and business teams to ship durable outcomes.</p>
+            <p>I also work close to production — using AI coding assistants, prototyping tools, and front-end understanding to explore ideas faster, pressure-test interaction details, and collaborate more effectively with engineering.</p>
+            <p>Previously at Carousell, Shopee, and MooVita, I built deep expertise in marketplace commerce, seller operations, mobility UX, and design systems for multi-market platforms.</p>
           </div>
         </div>
         <div class="about-sidebar">
@@ -655,29 +813,46 @@
             <div class="sidebar-label">Experience</div>
             <div class="company-list">
               <div class="company-item"><div class="company-dot grab-dot"></div>Grab — Lead Product Designer</div>
-              <div class="company-item"><div class="company-dot shopee-dot"></div>Shopee — Product Designer</div>
-              <div class="company-item"><div class="company-dot dbs-dot"></div>DBS Bank — UX Designer</div>
+              <div class="company-item"><div class="company-dot grab-dot"></div>Grab — Senior Product Designer</div>
+              <div class="company-item"><div class="company-dot carousell-dot"></div>Carousell Group — Senior Product Designer</div>
+              <div class="company-item"><div class="company-dot shopee-dot"></div>Shopee — Senior UX Designer</div>
+              <div class="company-item"><div class="company-dot moovita-dot"></div>MooVita Pte Ltd — UX Designer</div>
             </div>
           </div>
           <div class="sidebar-card">
-            <div class="sidebar-label">Specializations</div>
+            <div class="sidebar-label">Skills</div>
             <div class="skill-grid">
+              <span class="skill-pill">Product Strategy</span>
+              <span class="skill-pill">Systems Thinking</span>
               <span class="skill-pill">Fintech UX</span>
               <span class="skill-pill">Platform Design</span>
-              <span class="skill-pill">Design Systems</span>
               <span class="skill-pill">Growth Design</span>
-              <span class="skill-pill">Systems Thinking</span>
-              <span class="skill-pill">Prototyping</span>
+              <span class="skill-pill">Design Systems</span>
               <span class="skill-pill">User Research</span>
+              <span class="skill-pill">Information Architecture</span>
+              <span class="skill-pill">Prototyping</span>
+              <span class="skill-pill">Figma</span>
+              <span class="skill-pill">Claude Code</span>
+              <span class="skill-pill">Cursor</span>
+              <span class="skill-pill">AI Coding Assistants</span>
+              <span class="skill-pill">AI Prototyping</span>
+              <span class="skill-pill">Production-aware Design</span>
+              <span class="skill-pill">Code-to-Prototype</span>
               <span class="skill-pill">Experimentation</span>
+              <span class="skill-pill">Product Analytics</span>
+              <span class="skill-pill">Cross-functional Leadership</span>
+              <span class="skill-pill">Data-informed Design</span>
             </div>
           </div>
           <div class="sidebar-card">
             <div class="sidebar-label">Education</div>
             <div style="font-size:0.875rem;">
-              <div style="font-weight:500;">Bachelor of Design (Hons)</div>
-              <div style="color:var(--ink-secondary);font-size:0.825rem;">Nanyang Technological University</div>
-              <div style="color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:0.7rem;margin-top:0.2rem;">2013 — 2017</div>
+              <div style="font-weight:500;">Bachelor of Multimedia (Hons.), Interface Design</div>
+              <div style="color:var(--ink-secondary);font-size:0.825rem;">Multimedia University</div>
+              <div style="color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:0.7rem;margin-top:0.2rem;">2012 — 2015 · First Class Honours</div>
+              <div style="font-weight:500;margin-top:0.75rem;">Foundation Degree, Creative Multimedia</div>
+              <div style="color:var(--ink-secondary);font-size:0.825rem;">Multimedia University</div>
+              <div style="color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:0.7rem;margin-top:0.2rem;">2011 — 2012 · Second Upper</div>
             </div>
           </div>
         </div>
@@ -689,14 +864,18 @@
     <div class="footer-inner">
       <span>© 2024 Chloe Ong — Lead Product Designer</span>
       <div style="display:flex;gap:1.5rem;">
-        <a href="mailto:hello@chloeong.com">hello@chloeong.com</a>
-        <a href="https://linkedin.com/in/chloeong" target="_blank">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/chloe-ong-676745100/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="#" onclick="showPage('resume')">Resume</a>
       </div>
     </div>
   </footer>
 </div>
 
+
+<!-- ══════════════ CASE STUDY PAGE ══════════════ -->
+<div id="case-study-page" class="page">
+  <div class="case-wrap" id="case-study-content"></div>
+</div>
 
 <!-- ══════════════ RESUME PAGE ══════════════ -->
 <div id="resume-page" class="page">
@@ -709,20 +888,6 @@
         </div>
         <button class="download-btn" onclick="window.print()">Download PDF ↓</button>
       </div>
-      <div class="resume-meta">
-        <div class="resume-meta-item">
-          <div class="resume-meta-label">Email</div>
-          <div class="resume-meta-val">hello@chloeong.com</div>
-        </div>
-        <div class="resume-meta-item">
-          <div class="resume-meta-label">LinkedIn</div>
-          <div class="resume-meta-val">linkedin.com/in/chloeong</div>
-        </div>
-        <div class="resume-meta-item">
-          <div class="resume-meta-label">Portfolio</div>
-          <div class="resume-meta-val">chloeong.com</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -732,10 +897,24 @@
 
       <!-- Summary -->
       <div class="resume-section">
-        <div class="resume-section-title">Summary</div>
-        <p style="font-size:1rem;color:var(--ink-secondary);line-height:1.75;font-weight:300;">
-          Lead Product Designer with <strong style="color:var(--ink);">8+ years</strong> designing large-scale fintech, commerce, and platform ecosystems used by millions across Southeast Asia. Specialized in simplifying complex workflows, scaling design systems, and driving measurable outcomes through systems thinking, experimentation, and cross-functional leadership. Deep experience at the intersection of user empathy, business strategy, and technical constraints — across Grab, Shopee, and DBS Bank.
+        <div class="resume-section-title">About me</div>
+        <p style="font-size:1rem;color:var(--ink-secondary);line-height:1.8;font-weight:300;">
+          Lead Product Designer and researcher with <strong style="color:var(--ink);">12+ years</strong> of experience shaping high-scale fintech, commerce, and ecosystem products across Southeast Asia. I specialize in ambiguous, metrics-sensitive product surfaces where user intent, business growth, technical architecture, and operational scale need to work as one system.
         </p>
+        <div class="about-stats">
+          <div>
+            <div class="about-stat-num">12+</div>
+            <div class="about-stat-label">Years of Experience</div>
+          </div>
+          <div>
+            <div class="about-stat-num">1K+</div>
+            <div class="about-stat-label">Projects Shipped</div>
+          </div>
+          <div>
+            <div class="about-stat-num">30M+</div>
+            <div class="about-stat-label">Users Impacted</div>
+          </div>
+        </div>
       </div>
 
       <!-- Experience -->
@@ -745,91 +924,89 @@
         <div class="exp-item">
           <div class="exp-header">
             <div class="exp-role">Lead Product Designer</div>
-            <div class="exp-period">2022 — Present</div>
+            <div class="exp-period">Mar 2023 — Present</div>
           </div>
           <div class="exp-company">
             <div class="exp-company-logo" style="background:#00b14f;">G</div>
             Grab · Singapore
           </div>
-          <div class="impact-row">
-            <div class="impact-card"><div class="impact-num">34%</div><div class="impact-label">Engagement lift</div></div>
-            <div class="impact-card"><div class="impact-num">10M+</div><div class="impact-label">Users impacted</div></div>
-            <div class="impact-card"><div class="impact-num">8</div><div class="impact-label">Markets deployed</div></div>
+          <p class="exp-summary">Leading product design across finance experiences, growth surfaces, commerce, and superapp ecosystem platforms for millions of users across Southeast Asia — from product strategy and research through systems architecture, experimentation, and shipped outcomes.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Homepage Growth System</span>
+            <span class="exp-project-tag">Finance Design</span>
+            <span class="exp-project-tag">Group Order Experience</span>
+            <span class="exp-project-tag">GrabMart Supermarket Catalogue</span>
           </div>
-          <ul class="exp-bullets">
-            <li>Led end-to-end redesign of Grab's homepage ecosystem across iOS and Android, serving 10M+ daily active users across 8 Southeast Asian markets — resulting in 34% improvement in service discoverability and measurable homepage engagement uplift.</li>
-            <li>Architected scalable payment UX for Grab Finance PaySDK, enabling 40+ merchant integrations with consistent trust signals, localization flexibility, and reduced payment drop-off rates.</li>
-            <li>Drove product design strategy for Group Order — a real-time collaborative ordering flow — from 0→1, reducing coordination friction and improving order completion rates by 22%.</li>
-            <li>Established a reusable homepage component system adopted by 6 cross-functional teams, cutting design-to-dev handoff time by 40% and enabling faster experimentation cycles.</li>
-            <li>Partnered with PMs, engineers, data analysts, and C-suite to define product vision and design principles for Grab's superapp growth strategy.</li>
-            <li>Mentored 3 junior and mid-level designers; drove design critique culture and cross-team design quality standards.</li>
-          </ul>
         </div>
 
         <div class="exp-item">
           <div class="exp-header">
-            <div class="exp-role">Product Designer</div>
-            <div class="exp-period">2019 — 2022</div>
+            <div class="exp-role">Senior Product Designer</div>
+            <div class="exp-period">May 2021 — Mar 2023</div>
           </div>
           <div class="exp-company">
-            <div class="exp-company-logo" style="background:#f44c05;">S</div>
+            <div class="exp-company-logo" style="background:#00b14f;">G</div>
+            Grab · Singapore
+          </div>
+          <p class="exp-summary">Designed high-traffic food ordering, checkout, mart, and supermarket experiences — improving clarity, conversion, and platform consistency across complex consumer flows.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Food Ordering &amp; Checkout</span>
+            <span class="exp-project-tag">Mart &amp; Supermarket</span>
+            <span class="exp-project-tag">Platform Consistency</span>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-role">Senior Product Designer</div>
+            <div class="exp-period">Oct 2020 — Apr 2021</div>
+          </div>
+          <div class="exp-company">
+            <div class="exp-company-logo" style="background:#e63946;">C</div>
+            Carousell Group · Singapore
+          </div>
+          <p class="exp-summary">Improved seller experience, listing quality, and operational efficiency across one of Southeast Asia's largest marketplace platforms.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Seller Experience</span>
+            <span class="exp-project-tag">Listing &amp; Operations</span>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-role">Senior UX Designer</div>
+            <div class="exp-period">Jun 2019 — Oct 2020</div>
+          </div>
+          <div class="exp-company">
+            <div class="exp-company-logo" style="background:#ee4d2d;">S</div>
             Shopee · Singapore
           </div>
-          <ul class="exp-bullets">
-            <li>Designed core marketplace and wallet experiences for Shopee's SEA platform, improving conversion rates and payment trust metrics across 6 markets.</li>
-            <li>Led redesign of seller onboarding flows, reducing time-to-first-listing by 35% through simplified information architecture and progressive disclosure patterns.</li>
-            <li>Collaborated with growth teams on A/B experimentation for homepage banners, product cards, and checkout flows — directly contributing to double-digit revenue growth metrics.</li>
-            <li>Built and maintained a shared component library used across 4 product squads, reducing design inconsistencies by 60%.</li>
-          </ul>
+          <p class="exp-summary">Designed marketplace commerce experiences and contributed to design systems and product analytics practices for regional-scale shopping flows.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Commerce UX</span>
+            <span class="exp-project-tag">Design Systems</span>
+          </div>
         </div>
 
         <div class="exp-item">
           <div class="exp-header">
             <div class="exp-role">UX Designer</div>
-            <div class="exp-period">2017 — 2019</div>
+            <div class="exp-period">May 2018 — Apr 2019</div>
           </div>
           <div class="exp-company">
-            <div class="exp-company-logo" style="background:#ee2e24;">D</div>
-            DBS Bank · Singapore
+            <div class="exp-company-logo" style="background:#c8102e;">M</div>
+            MooVita Pte Ltd · Singapore
           </div>
-          <ul class="exp-bullets">
-            <li>Designed digital banking experiences for payments, fund transfers, and investment products within DBS digibank — serving 4M+ customers across Singapore and India.</li>
-            <li>Conducted 60+ usability testing sessions to inform iterative design decisions on complex financial workflows, reducing error rates and support ticket volume.</li>
-            <li>Partnered with compliance and legal stakeholders to balance regulatory requirements with user-centered design — shipping simplified KYC and onboarding flows.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Selected Projects -->
-      <div class="resume-section">
-        <div class="resume-section-title">Selected Projects</div>
-        <div class="project-item">
-          <div class="project-row">
-            <div class="project-name">Grab Homepage Ecosystem</div>
-            <a class="view-link" href="#" onclick="return false;">View case study →</a>
+          <p class="exp-summary">Designed mobility and transportation experiences focused on usability, operational efficiency, and research-informed product decisions in an emerging autonomous mobility space.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Mobility UX</span>
+            <span class="exp-project-tag">User Research</span>
           </div>
-          <div class="project-desc">Platform redesign focused on discoverability, personalization, and scalable ecosystem growth. Led from research through to production across 8 markets.</div>
-        </div>
-        <div class="project-item" style="border-top:1px solid var(--border);padding-top:1.25rem;">
-          <div class="project-row">
-            <div class="project-name">Grab Finance PaySDK</div>
-            <a class="view-link" href="#" onclick="return false;">View case study →</a>
-          </div>
-          <div class="project-desc">Scalable payment SDK experience supporting localized financial journeys and merchant integrations across Southeast Asia.</div>
-        </div>
-        <div class="project-item" style="border-top:1px solid var(--border);padding-top:1.25rem;">
-          <div class="project-row">
-            <div class="project-name">Group Order Experience</div>
-            <a class="view-link" href="#" onclick="return false;">View case study →</a>
-          </div>
-          <div class="project-desc">Collaborative ordering redesign improving real-time coordination and meal completion experiences for groups.</div>
-        </div>
-        <div class="project-item" style="border-top:1px solid var(--border);padding-top:1.25rem;">
-          <div class="project-row">
-            <div class="project-name">GrabMart Catalogue Experience</div>
-            <a class="view-link" href="#" onclick="return false;">View case study →</a>
-          </div>
-          <div class="project-desc">Commerce browsing optimization for high-intent grocery shopping across large-scale merchant ecosystems.</div>
         </div>
       </div>
     </div>
@@ -837,21 +1014,12 @@
     <!-- SIDEBAR -->
     <div class="resume-sidebar">
 
-      <!-- Photo placeholder -->
-      <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#1a5c3e,#00b14f);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.8rem;color:white;font-weight:700;">CO</div>
-
       <!-- Contact -->
       <div class="skill-section">
         <div class="skill-section-title">Contact</div>
         <div class="contact-list">
-          <a class="contact-item" href="mailto:hello@chloeong.com">
-            <div class="contact-icon">✉</div>hello@chloeong.com
-          </a>
-          <a class="contact-item" href="https://linkedin.com" target="_blank">
-            <div class="contact-icon">in</div>linkedin.com/in/chloeong
-          </a>
-          <a class="contact-item" href="#">
-            <div class="contact-icon">🌐</div>chloeong.com
+          <a class="contact-item" href="https://www.linkedin.com/in/chloe-ong-676745100/" target="_blank" rel="noopener noreferrer">
+            <div class="contact-icon">in</div>linkedin.com/in/chloe-ong-676745100
           </a>
           <div class="contact-item">
             <div class="contact-icon">📍</div>Singapore
@@ -859,64 +1027,46 @@
         </div>
       </div>
 
-      <!-- Skills with bars -->
+      <!-- Skills -->
       <div class="skill-section" style="margin-top:1.5rem;">
-        <div class="skill-section-title">Core Skills</div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Product Strategy</span><span>Expert</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Systems Thinking</span><span>Expert</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Fintech UX</span><span>Expert</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Platform Design</span><span>Expert</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Design Systems</span><span>Advanced</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Growth Design</span><span>Advanced</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>User Research</span><span>Advanced</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label"><span>Prototyping</span><span>Advanced</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div>
-        </div>
-      </div>
-
-      <!-- Tools -->
-      <div class="skill-section" style="margin-top:1.5rem;">
-        <div class="skill-section-title">Tools</div>
-        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+        <div class="skill-section-title">Skills</div>
+        <div class="skill-grid">
+          <span class="skill-pill">Product Strategy</span>
+          <span class="skill-pill">Systems Thinking</span>
+          <span class="skill-pill">Fintech UX</span>
+          <span class="skill-pill">Platform Design</span>
+          <span class="skill-pill">Growth Design</span>
+          <span class="skill-pill">Design Systems</span>
+          <span class="skill-pill">User Research</span>
+          <span class="skill-pill">Information Architecture</span>
+          <span class="skill-pill">Prototyping</span>
           <span class="skill-pill">Figma</span>
-          <span class="skill-pill">Protopie</span>
-          <span class="skill-pill">Framer</span>
-          <span class="skill-pill">Maze</span>
-          <span class="skill-pill">Amplitude</span>
-          <span class="skill-pill">Mixpanel</span>
-          <span class="skill-pill">Notion</span>
-          <span class="skill-pill">Jira</span>
+          <span class="skill-pill">Claude Code</span>
+          <span class="skill-pill">Cursor</span>
+          <span class="skill-pill">AI Coding Assistants</span>
+          <span class="skill-pill">AI Prototyping</span>
+          <span class="skill-pill">Production-aware Design</span>
+          <span class="skill-pill">Code-to-Prototype</span>
+          <span class="skill-pill">Experimentation</span>
+          <span class="skill-pill">Product Analytics</span>
+          <span class="skill-pill">Cross-functional Leadership</span>
+          <span class="skill-pill">Workshop Facilitation</span>
+          <span class="skill-pill">Data-informed Design</span>
         </div>
       </div>
 
-      <!-- Languages -->
+      <!-- Certifications -->
       <div class="skill-section" style="margin-top:1.5rem;">
-        <div class="skill-section-title">Languages</div>
-        <div style="display:flex;flex-direction:column;gap:0.4rem;font-size:0.85rem;">
-          <div style="display:flex;justify-content:space-between;"><span>English</span><span style="color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:0.75rem;">Native</span></div>
-          <div style="display:flex;justify-content:space-between;"><span>Mandarin</span><span style="color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:0.75rem;">Conversational</span></div>
+        <div class="skill-section-title">Certifications</div>
+        <div class="cert-item">
+          <div class="cert-name">Certified Usability Analyst (CUA)</div>
+          <div class="cert-org">Human Factors International</div>
+          <div class="cert-date">Issued Dec 2016</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">Agile Certified Product Manager</div>
+          <div class="cert-org">AIPMM</div>
+          <div class="cert-date">Issued Mar 2017</div>
         </div>
       </div>
 
@@ -924,18 +1074,26 @@
       <div class="skill-section" style="margin-top:1.5rem;">
         <div class="skill-section-title">Education</div>
         <div class="education-item">
-          <div class="edu-degree">Bachelor of Design (Hons)</div>
-          <div class="edu-school">Nanyang Technological University</div>
-          <div class="edu-year">2013 — 2017</div>
+          <div class="edu-degree">Bachelor of Multimedia (Hons.), Interface Design</div>
+          <div class="edu-school">Multimedia University</div>
+          <div class="edu-year">2012 — 2015 · First Class Honours</div>
+        </div>
+        <div class="education-item">
+          <div class="edu-degree">Foundation Degree, Creative Multimedia</div>
+          <div class="edu-school">Multimedia University</div>
+          <div class="edu-year">2011 — 2012 · Second Upper</div>
         </div>
       </div>
 
-      <!-- Design Philosophy -->
-      <div class="skill-section" style="margin-top:1.5rem;padding:1.25rem;background:var(--surface-alt);border-radius:var(--radius);border-left:3px solid var(--accent-warm);">
-        <div class="skill-section-title" style="margin-bottom:0.5rem;">Philosophy</div>
-        <p style="font-size:0.825rem;color:var(--ink-secondary);line-height:1.65;font-style:italic;">
-          "Great product design is not about visual polish alone — it's about creating scalable systems that simplify complexity, build trust, and drive real outcomes for real people."
-        </p>
+      <!-- Languages -->
+      <div class="skill-section" style="margin-top:1.5rem;">
+        <div class="skill-section-title">Languages</div>
+        <div class="lang-row"><span>English</span><span class="lang-level">Native / Bilingual</span></div>
+        <div class="lang-row"><span>Chinese (Simplified)</span><span class="lang-level">Native / Bilingual</span></div>
+        <div class="lang-row"><span>Cantonese</span><span class="lang-level">Native / Bilingual</span></div>
+        <div class="lang-row"><span>Hokkien</span><span class="lang-level">Native / Bilingual</span></div>
+        <div class="lang-row"><span>Malay</span><span class="lang-level">Limited Working Proficiency</span></div>
+        <div class="lang-row"><span>Korean</span><span class="lang-level">Elementary Proficiency</span></div>
       </div>
     </div>
   </div>
@@ -952,14 +1110,273 @@
 </div>
 
 <script>
-  function showPage(which) {
+  const PROJECTS = {
+    homepage: {
+      featured: true,
+      title: "Redesigning Grab's Homepage into a Scalable Discovery and Growth System",
+      role: "Lead Product Designer, Researcher",
+      timeline: "6 months",
+      team: "PM, Engineers, Data Analysts, Researchers, Content Designers",
+      heroClass: "case-hero-grab",
+      heroType: "video",
+      videoSrc: "images/homepage%20video.MP4",
+      impacts: [
+        { value: "BTR", label: "Protected core service booking-through-rate" },
+        { value: "+Engagement", label: "Increased meaningful homepage interaction" },
+        { value: "8 markets", label: "Scaled across Southeast Asia" }
+      ],
+      overview: "The Grab homepage is one of the most commercially sensitive surfaces in the app, responsible for helping users discover services while protecting booking-through-rate (BTR) across core Grab verticals. The goal was to increase homepage engagement without cannibalizing service intent, creating a scalable discovery system that could support growth, personalization, and business prioritization across 8 Southeast Asian markets.",
+      challenges: [
+        { icon: "◆", title: "Protecting Service BTR", desc: "Homepage changes needed to improve exploration while ensuring high-intent users could still enter Ride, Food, Mart, and other Grab services without measurable booking drop-off." },
+        { icon: "◆", title: "Growing Engagement Responsibly", desc: "The team needed to increase homepage interaction and content discovery without adding noise, decision fatigue, or promotional clutter to the first screen." },
+        { icon: "◆", title: "Balancing Cross-vertical Priorities", desc: "Multiple business lines competed for visibility, requiring a principled system for prioritization, personalization, and experimentation across markets." }
+      ],
+      strategies: [
+        { num: "01", title: "Preserve High-intent Paths", desc: "Protected core service entry points with clear hierarchy, predictable placement, and instrumentation to monitor BTR impact throughout rollout." },
+        { num: "02", title: "Design for Meaningful Engagement", desc: "Introduced contextual modules and personalized discovery moments that encouraged exploration only when they added user value." },
+        { num: "03", title: "Create a Governed Growth System", desc: "Built reusable patterns, ranking principles, and experiment guardrails so teams could optimize engagement without degrading core conversion." }
+      ],
+      solutions: [
+        { emoji: "📐", title: "BTR-safe Layout Framework", desc: "A structured homepage system that preserved critical service access while allowing flexible modules for discovery, promotions, and personalization." },
+        { emoji: "👁", title: "Engagement-led Visual Hierarchy", desc: "A refined hierarchy that helped users scan faster, understand priority, and engage with relevant content without losing task momentum." },
+        { emoji: "🧩", title: "Experiment-ready Component System", desc: "Reusable modules with measurement guardrails, enabling squads to test engagement ideas while monitoring downstream service conversion." }
+      ]
+    },
+    'group-order': {
+      featured: false,
+      title: "Designing Group Order as a Collaborative Commerce System",
+      role: "Lead Product Designer, Researcher",
+      timeline: "7 months",
+      team: "PM, Engineers, Marketing, Business, Finance Team, Content Designer",
+      heroClass: "case-hero-order",
+      heroType: "multi-video",
+      videos: [
+        { src: "images/host.MP4", label: "Host experience" },
+        { src: "images/members.mov", label: "Member experience" }
+      ],
+      impacts: [
+        { value: "AOV ↑", label: "Increased average order value" },
+        { value: "Conversion ↑", label: "Improved group order completion" },
+        { value: "BTR ↑", label: "Higher booking-through-rate" }
+      ],
+      overview: "Group ordering is a high-frequency social use case where coordination friction directly impacts order completion. We redesigned the end-to-end flow — from group creation to checkout — to simplify decision-making, enable real-time collaboration, and improve completion rates for shared meals.",
+      challenges: [
+        { icon: "◆", title: "Coordination Friction", desc: "Users struggled to align on items, quantities, and payment split across multiple participants in real time." },
+        { icon: "◆", title: "Decision Paralysis", desc: "Large menus and unclear group state led to abandoned orders and reduced engagement with the feature." },
+        { icon: "◆", title: "Real-time Complexity", desc: "Syncing live updates across devices while maintaining checkout integrity required careful UX and system design." }
+      ],
+      strategies: [
+        { num: "01", title: "Simplify Group Setup", desc: "Streamlined invite flows and clear host controls to get groups ordering faster with fewer steps." },
+        { num: "02", title: "Make State Visible", desc: "Live cart visibility, participant status, and contribution tracking so everyone stays aligned." },
+        { num: "03", title: "Reduce Checkout Anxiety", desc: "Transparent split options and confirmation patterns that build confidence before payment." }
+      ],
+      solutions: [
+        { emoji: "🔗", title: "One-tap Group Invites", desc: "Shareable links and in-app invites that bring participants into a shared cart within seconds." },
+        { emoji: "🛒", title: "Live Shared Cart", desc: "Real-time updates showing who added what, with clear editing permissions and status indicators." },
+        { emoji: "✓", title: "Flexible Split Checkout", desc: "Host-pay and split-pay options with clear summaries, reducing post-order confusion and support tickets." }
+      ]
+    },
+    grabmart: {
+      featured: false,
+      title: "Re-architecting GrabMart's Supermarket Catalogue for Faster Discovery and Conversion",
+      role: "Lead Product Designer, Researcher",
+      timeline: "7 months",
+      team: "PM, Engineers, Mart Operations, Merchants, Content Designer, Marketing, Business",
+      heroClass: "case-hero-mart",
+      heroType: "video",
+      videoSrc: "images/mart.MP4",
+      videoStart: 8,
+      impacts: [
+        { value: "Discovery ↑", label: "Improved supermarket product findability" },
+        { value: "Conversion ↑", label: "Reduced friction from browse to basket" },
+        { value: "AOV ↑", label: "Supported larger grocery basket building" }
+      ],
+      overview: "GrabMart's supermarket catalogue sits at the intersection of high-intent grocery shopping, dense SKU discovery, and merchant-driven assortment strategy. The redesign focused on re-architecting the catalogue experience so users could scan categories, evaluate products, and build baskets faster while giving the business a scalable system for promotions, recommendations, and supermarket-specific merchandising.",
+      challenges: [
+        { icon: "◆", title: "Catalogue Complexity", desc: "Massive SKU counts and inconsistent merchant data made browsing overwhelming for high-intent shoppers." },
+        { icon: "◆", title: "Discovery Gaps", desc: "Users couldn't efficiently find promotions, staples, and complementary items within dense catalogue structures." },
+        { icon: "◆", title: "Merchant Variability", desc: "Each merchant had unique catalogue structures, requiring flexible templates without bespoke design per partner." }
+      ],
+      strategies: [
+        { num: "01", title: "Prioritize Intent Signals", desc: "Surfaced reorder, popular, and promotional modules based on user behavior and session context." },
+        { num: "02", title: "Structure for Scanning", desc: "Improved category hierarchy, filters, and card layouts optimized for quick visual parsing." },
+        { num: "03", title: "Scale with Templates", desc: "Reusable catalogue components adaptable to merchant-specific inventory and merchandising rules." }
+      ],
+      solutions: [
+        { emoji: "🏷", title: "Smart Category Navigation", desc: "Refined taxonomy and sticky navigation helping users drill into relevant aisles with fewer taps." },
+        { emoji: "⭐", title: "Contextual Merchandising", desc: "Personalized rails for repurchase, trending items, and basket builders that lift average order value." },
+        { emoji: "📦", title: "Scalable Product Cards", desc: "Unified card system handling varied image ratios, pricing formats, and promo badges across merchants." }
+      ]
+    }
+  };
+
+  function hideAllPages() {
     document.getElementById('main-page').classList.remove('active');
     document.getElementById('resume-page').classList.remove('active');
+    document.getElementById('case-study-page').classList.remove('active');
+  }
+
+  function showPage(which) {
+    hideAllPages();
     if (which === 'resume') {
       document.getElementById('resume-page').classList.add('active');
-      window.scrollTo(0, 0);
     } else {
       document.getElementById('main-page').classList.add('active');
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function showProject(id) {
+    const project = PROJECTS[id];
+    if (!project) return;
+    hideAllPages();
+    document.getElementById('case-study-page').classList.add('active');
+    renderCaseStudy(project);
+    window.scrollTo(0, 0);
+  }
+
+  function renderCaseStudy(p) {
+    let heroContent = '<div class="case-hero-visual">' + (p.heroEmoji || '\uD83D\uDCF1') + '</div>';
+    if (p.heroType === 'phones') {
+      heroContent = '<div class="case-hero-phones"><div class="case-phone"></div><div class="case-phone"></div><div class="case-phone"></div></div>';
+    } else if (p.heroType === 'video') {
+      heroContent = '<video class="case-video" src="' + p.videoSrc + '" data-start="' + (p.videoStart || 0) + '" autoplay muted loop playsinline preload="auto"></video>';
+    } else if (p.heroType === 'multi-video') {
+      heroContent = '<div class="case-media-split">' + p.videos.map((video, index) => `
+        <div class="case-video-wrap">
+          <video class="case-video case-stagger-video" src="${video.src}" ${index === 0 ? 'autoplay' : ''} muted loop playsinline preload="auto" aria-label="${video.label}" data-sequence-index="${index}"></video>
+          <div class="case-video-label">${video.label}</div>
+        </div>
+      `).join('') + '</div>';
+    }
+
+    const card = (items, fn) => items.map(fn).join('');
+    const impactBlock = p.impacts ? `
+      <div class="case-impact-row">
+        ${card(p.impacts, impact => `
+          <div class="case-impact-item">
+            <div class="case-impact-value">${impact.value}</div>
+            <div class="case-impact-label">${impact.label}</div>
+          </div>
+        `)}
+      </div>
+    ` : '';
+    const sectionHead = (kicker, title) => `
+      <div class="case-section-head">
+        <div>
+          <div class="case-section-kicker">${kicker}</div>
+          <h2 class="case-section-title">${title}</h2>
+        </div>
+      </div>
+    `;
+    const mediaBlock = p.heroType === 'video'
+      ? `
+        <section class="case-section case-overview-split">
+          <div>
+            <div class="case-section-kicker">Context</div>
+            <h2 class="case-section-title">Overview</h2>
+            <p class="case-overview">${p.overview}</p>
+            ${impactBlock}
+          </div>
+          <div class="case-video-wrap">${heroContent}</div>
+        </section>
+      `
+      : p.heroType === 'multi-video'
+      ? `
+        <section class="case-section">
+          ${sectionHead('Context', 'Overview')}
+          <p class="case-overview">${p.overview}</p>
+          ${impactBlock}
+        </section>
+        <section class="case-section">
+          ${sectionHead('Demo', 'Experience walkthrough')}
+          ${heroContent}
+        </section>
+      `
+      : `
+        <div class="case-hero ${p.heroClass}">${heroContent}</div>
+        <section class="case-section">
+          ${sectionHead('Context', 'Overview')}
+          <p class="case-overview">${p.overview}</p>
+          ${impactBlock}
+        </section>
+      `;
+
+    document.getElementById('case-study-content').innerHTML = `
+      <button class="case-back" onclick="showPage('main')">\u2190 Back to work</button>
+      <header class="case-header">
+        <span class="case-badge">${p.featured ? 'Featured Case Study' : 'Case Study'}</span>
+        <h1 class="case-title">${p.title}</h1>
+        <p class="case-subtitle">A product design case study on aligning user intent, business metrics, and scalable systems across complex product surfaces.</p>
+      </header>
+      <div class="case-meta">
+        <div>
+          <div class="case-meta-label">My Role</div>
+          <div class="case-meta-val">${p.role}</div>
+        </div>
+        <div>
+          <div class="case-meta-label">Timeline</div>
+          <div class="case-meta-val">${p.timeline}</div>
+        </div>
+        <div>
+          <div class="case-meta-label">Team</div>
+          <div class="case-meta-val">${p.team}</div>
+        </div>
+      </div>
+      ${mediaBlock}
+      <section class="case-section">
+        ${sectionHead('Case study flow', 'Challenge, Strategy and Solution')}
+        <div class="case-combined-grid">
+          ${card(p.challenges, (challenge, index) => {
+            const strategy = p.strategies[index];
+            const solution = p.solutions[index];
+            return `
+              <div class="case-combined-card">
+                <div class="case-combined-num">0${index + 1}</div>
+                <div class="case-combined-block">
+                  <div class="case-combined-label">Challenge</div>
+                  <div class="case-card-title">${challenge.title}</div>
+                  <div class="case-card-desc">${challenge.desc}</div>
+                </div>
+                <div class="case-combined-block">
+                  <div class="case-combined-label">Strategy</div>
+                  <div class="case-card-title">${strategy.title}</div>
+                  <div class="case-card-desc">${strategy.desc}</div>
+                </div>
+                <div class="case-combined-block">
+                  <div class="case-combined-label">Solution</div>
+                  <div class="case-card-title">${solution.title}</div>
+                  <div class="case-card-desc">${solution.desc}</div>
+                </div>
+              </div>
+            `;
+          })}
+        </div>
+      </section>
+    `;
+
+    const staggerVideos = Array.from(document.querySelectorAll('.case-stagger-video'));
+    if (staggerVideos.length) {
+      staggerVideos.forEach((video, index) => {
+        video.currentTime = 0;
+        if (index === 0) video.play().catch(() => {});
+        else video.pause();
+      });
+      window.setTimeout(() => {
+        staggerVideos.slice(1).forEach(video => {
+          video.currentTime = 0;
+          video.play().catch(() => {});
+        });
+      }, 47000);
+    } else {
+      document.querySelectorAll('.case-video').forEach(video => {
+        const start = Number(video.dataset.start) || 0;
+        video.addEventListener('loadedmetadata', () => {
+          if (start) video.currentTime = start;
+          video.play().catch(() => {});
+        }, { once: true });
+        video.play().catch(() => {});
+      });
     }
   }
 
