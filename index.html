@@ -371,7 +371,7 @@
   .case-video-wrap {
     width: 260px; max-width: 100%;
     display: flex; flex-direction: column; justify-content: center; align-items: center;
-    justify-self: center;
+    justify-self: center; position: relative;
   }
   .case-video-label {
     font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
@@ -379,9 +379,30 @@
   }
   .case-media-split {
     display: grid; grid-template-columns: repeat(2, 260px);
-    justify-content: center; gap: 2rem;
+    justify-content: center; gap: 2rem; position: relative;
+  }
+  .case-media-split::before {
+    content: '';
+    position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%);
+    width: 2rem; height: 1px; background: var(--border-strong);
   }
   .case-media-split .case-video-wrap { width: 260px; }
+  .case-video-waiting {
+    position: absolute; inset: 0 0 2rem 0; border-radius: 34px;
+    background: rgba(13,13,13,0.58); color: white;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 1.25rem; z-index: 2;
+    transition: opacity 0.3s ease;
+  }
+  .case-video-waiting.hidden { opacity: 0; pointer-events: none; }
+  .case-video-countdown {
+    font-family: var(--serif); font-size: 2.4rem; line-height: 1; font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .case-video-waiting-text {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em;
+    text-transform: uppercase; opacity: 0.82; line-height: 1.5;
+  }
   .case-overview-split {
     display: grid; grid-template-columns: minmax(0, 1fr) 260px;
     gap: 3rem; align-items: center;
@@ -683,7 +704,7 @@
               <span class="stat-label">Users impacted</span>
             </div>
             <div class="stat">
-              <span class="stat-num">1K+</span>
+              <span class="stat-num">90+</span>
               <span class="stat-label">Projects shipped</span>
             </div>
           </div>
@@ -907,7 +928,7 @@
             <div class="about-stat-label">Years of Experience</div>
           </div>
           <div>
-            <div class="about-stat-num">1K+</div>
+            <div class="about-stat-num">90+</div>
             <div class="about-stat-label">Projects Shipped</div>
           </div>
           <div>
@@ -1006,6 +1027,96 @@
           <div class="exp-project-tags">
             <span class="exp-project-tag">Mobility UX</span>
             <span class="exp-project-tag">User Research</span>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-role">UX Designer</div>
+            <div class="exp-period">Oct 2017 — Feb 2018</div>
+          </div>
+          <div class="exp-company">
+            <div class="exp-company-logo" style="background:#f4b400;">M</div>
+            MOZAT Pte Ltd · Singapore
+          </div>
+          <p class="exp-summary">Designed mobile and web experiences across consumer-facing products, translating early product requirements into usable flows, interface patterns, and polished visual design.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Mobile UX</span>
+            <span class="exp-project-tag">Web UX</span>
+            <span class="exp-project-tag">Visual Design</span>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-role">Senior UX Designer</div>
+            <div class="exp-period">Jul 2016 — Aug 2017</div>
+          </div>
+          <div class="exp-company">
+            <div class="exp-company-logo" style="background:#d71920;">F</div>
+            Fusionex International · Singapore
+          </div>
+          <p class="exp-summary">Led UX design for enterprise and data-driven digital products, structuring complex workflows into clear user journeys and scalable interface systems.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Enterprise UX</span>
+            <span class="exp-project-tag">Data Products</span>
+            <span class="exp-project-tag">Workflow Design</span>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-role">UX Designer</div>
+            <div class="exp-period">Mar 2015 — Jun 2016</div>
+          </div>
+          <div class="exp-company">
+            <div class="exp-company-logo" style="background:#d71920;">F</div>
+            Fusionex International · Singapore
+          </div>
+          <p class="exp-summary">Designed user flows, wireframes, prototypes, and UI systems for web and mobile products, building a strong foundation in usability, information architecture, and product delivery.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Wireframing</span>
+            <span class="exp-project-tag">Prototyping</span>
+            <span class="exp-project-tag">Information Architecture</span>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-role">Professional Freelancer</div>
+            <div class="exp-period">Jan 2012 — Jun 2015</div>
+          </div>
+          <div class="exp-company">
+            <div class="exp-company-logo" style="background:#8aa0b3;">F</div>
+            Self-employed · Singapore
+          </div>
+          <p class="exp-summary">Delivered UX, website, mobile application, and marketing design work for clients, building end-to-end craft across discovery, layout, visual systems, and production-ready assets.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">Freelance UX</span>
+            <span class="exp-project-tag">Mobile Apps</span>
+            <span class="exp-project-tag">Marketing Design</span>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-role">UX Intern</div>
+            <div class="exp-period">Feb 2014 — May 2014</div>
+          </div>
+          <div class="exp-company">
+            <div class="exp-company-logo" style="background:#4d7ea8;">J</div>
+            JobStreet · Singapore
+          </div>
+          <p class="exp-summary">Supported UX research and product improvement work through user interviews, surveys, heatmap analysis, and recommendations that improved usability across digital product experiences.</p>
+          <div class="exp-projects-label">Key initiatives</div>
+          <div class="exp-project-tags">
+            <span class="exp-project-tag">User Interviews</span>
+            <span class="exp-project-tag">Surveys</span>
+            <span class="exp-project-tag">Heatmap Analysis</span>
           </div>
         </div>
       </div>
@@ -1144,7 +1255,7 @@
     },
     'group-order': {
       featured: false,
-      title: "Designing Group Order as a Collaborative Commerce System",
+      title: "Designing Group Order to Make Shared Meals Easier",
       role: "Lead Product Designer, Researcher",
       timeline: "7 months",
       team: "PM, Engineers, Marketing, Business, Finance Team, Content Designer",
@@ -1216,6 +1327,12 @@
     document.getElementById('case-study-page').classList.remove('active');
   }
 
+  function scrollToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+
   function showPage(which) {
     hideAllPages();
     if (which === 'resume') {
@@ -1223,28 +1340,42 @@
     } else {
       document.getElementById('main-page').classList.add('active');
     }
-    window.scrollTo(0, 0);
+    scrollToTop();
   }
 
   function showProject(id) {
     const project = PROJECTS[id];
     if (!project) return;
+    scrollToTop();
     hideAllPages();
     document.getElementById('case-study-page').classList.add('active');
     renderCaseStudy(project);
-    window.scrollTo(0, 0);
+    scrollToTop();
+    requestAnimationFrame(scrollToTop);
+    window.setTimeout(scrollToTop, 100);
   }
 
   function renderCaseStudy(p) {
+    window.clearTimeout(window.groupOrderDelayTimer);
+    window.clearTimeout(window.groupOrderRestartTimer);
+    window.clearInterval(window.groupOrderCountdownTimer);
+    if (window.caseVideoObserver) window.caseVideoObserver.disconnect();
+
     let heroContent = '<div class="case-hero-visual">' + (p.heroEmoji || '\uD83D\uDCF1') + '</div>';
     if (p.heroType === 'phones') {
       heroContent = '<div class="case-hero-phones"><div class="case-phone"></div><div class="case-phone"></div><div class="case-phone"></div></div>';
     } else if (p.heroType === 'video') {
-      heroContent = '<video class="case-video" src="' + p.videoSrc + '" data-start="' + (p.videoStart || 0) + '" autoplay muted loop playsinline preload="auto"></video>';
+      heroContent = '<video class="case-video" src="' + p.videoSrc + '" data-start="' + (p.videoStart || 0) + '" muted loop playsinline preload="auto"></video>';
     } else if (p.heroType === 'multi-video') {
       heroContent = '<div class="case-media-split">' + p.videos.map((video, index) => `
         <div class="case-video-wrap">
-          <video class="case-video case-stagger-video" src="${video.src}" ${index === 0 ? 'autoplay' : ''} muted loop playsinline preload="auto" aria-label="${video.label}" data-sequence-index="${index}"></video>
+          <video class="case-video case-stagger-video" data-src="${video.src}" muted playsinline preload="none" aria-label="${video.label}" data-sequence-index="${index}"></video>
+          ${index > 0 ? `
+            <div class="case-video-waiting" data-countdown-overlay>
+              <div class="case-video-countdown" data-countdown-value>47</div>
+              <div class="case-video-waiting-text">Waiting for host</div>
+            </div>
+          ` : ''}
           <div class="case-video-label">${video.label}</div>
         </div>
       `).join('') + '</div>';
@@ -1355,28 +1486,142 @@
       </section>
     `;
 
-    const staggerVideos = Array.from(document.querySelectorAll('.case-stagger-video'));
-    if (staggerVideos.length) {
-      staggerVideos.forEach((video, index) => {
-        video.currentTime = 0;
-        if (index === 0) video.play().catch(() => {});
-        else video.pause();
-      });
-      window.setTimeout(() => {
-        staggerVideos.slice(1).forEach(video => {
-          video.currentTime = 0;
-          video.play().catch(() => {});
+    const setupVideos = () => {
+      const staggerVideos = Array.from(document.querySelectorAll('.case-stagger-video'));
+      if (staggerVideos.length) {
+        const demoSection = document.querySelector('.case-media-split');
+        if (!demoSection) return;
+        let hasStarted = false;
+        let isDemoVisible = false;
+        let completedVideos = new Set();
+        const delaySeconds = 47;
+        const countdownValue = document.querySelector('[data-countdown-value]');
+        const countdownOverlay = document.querySelector('[data-countdown-overlay]');
+
+        const clearGroupOrderTimers = () => {
+          window.clearTimeout(window.groupOrderDelayTimer);
+          window.clearTimeout(window.groupOrderRestartTimer);
+          window.clearInterval(window.groupOrderCountdownTimer);
+        };
+
+        const prepareVideo = (video) => {
+          if (!video.getAttribute('src')) {
+            video.setAttribute('src', video.dataset.src);
+            video.load();
+          }
+        };
+
+        const resetVideo = (video) => {
+          prepareVideo(video);
+          video.pause();
+          if (video.readyState >= 1) video.currentTime = 0;
+          else video.addEventListener('loadedmetadata', () => { video.currentTime = 0; }, { once: true });
+        };
+
+        const playFromStart = (video) => {
+          prepareVideo(video);
+          const resetAndPlay = () => {
+            video.currentTime = 0;
+            video.play().catch(() => {});
+          };
+          if (video.readyState >= 1) resetAndPlay();
+          else video.addEventListener('loadedmetadata', resetAndPlay, { once: true });
+        };
+
+        const resetWaitingState = () => {
+          if (countdownOverlay) countdownOverlay.classList.remove('hidden');
+          if (countdownValue) countdownValue.textContent = delaySeconds;
+        };
+
+        const startGroupOrderCycle = () => {
+          if (!isDemoVisible) return;
+          clearGroupOrderTimers();
+          completedVideos = new Set();
+          resetWaitingState();
+
+          staggerVideos.forEach(resetVideo);
+          playFromStart(staggerVideos[0]);
+
+          let remainingSeconds = delaySeconds;
+          window.groupOrderCountdownTimer = window.setInterval(() => {
+            remainingSeconds -= 1;
+            if (countdownValue) countdownValue.textContent = Math.max(remainingSeconds, 0);
+            if (remainingSeconds <= 0) {
+              window.clearInterval(window.groupOrderCountdownTimer);
+            }
+          }, 1000);
+
+          window.groupOrderDelayTimer = window.setTimeout(() => {
+            if (!isDemoVisible) return;
+            if (countdownOverlay) countdownOverlay.classList.add('hidden');
+            staggerVideos.slice(1).forEach(playFromStart);
+          }, delaySeconds * 1000);
+        };
+
+        staggerVideos.forEach((video, index) => {
+          video.addEventListener('ended', () => {
+            completedVideos.add(index);
+            if (completedVideos.size === staggerVideos.length) {
+              window.groupOrderRestartTimer = window.setTimeout(startGroupOrderCycle, 600);
+            }
+          });
         });
-      }, 47000);
+
+        const stopGroupOrderDemo = () => {
+          hasStarted = false;
+          isDemoVisible = false;
+          clearGroupOrderTimers();
+          completedVideos = new Set();
+          resetWaitingState();
+          staggerVideos.forEach(video => {
+            if (video.getAttribute('src')) {
+              video.pause();
+              if (video.readyState >= 1) video.currentTime = 0;
+            }
+          });
+        };
+
+        const startGroupOrderDemo = () => {
+          if (hasStarted) return;
+          hasStarted = true;
+          isDemoVisible = true;
+          startGroupOrderCycle();
+        };
+
+        window.caseVideoObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) startGroupOrderDemo();
+            else stopGroupOrderDemo();
+          });
+        }, { threshold: 0.75 });
+        window.caseVideoObserver.observe(demoSection);
+        return;
+      }
+
+      const videos = Array.from(document.querySelectorAll('.case-video'));
+      if (!videos.length) return;
+      window.caseVideoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const video = entry.target;
+          if (entry.isIntersecting) {
+            const start = Number(video.dataset.start) || 0;
+            if (!video.dataset.started) {
+              if (start) video.currentTime = start;
+              video.dataset.started = 'true';
+            }
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.45 });
+      videos.forEach(video => window.caseVideoObserver.observe(video));
+    };
+
+    if ('IntersectionObserver' in window) {
+      setupVideos();
     } else {
-      document.querySelectorAll('.case-video').forEach(video => {
-        const start = Number(video.dataset.start) || 0;
-        video.addEventListener('loadedmetadata', () => {
-          if (start) video.currentTime = start;
-          video.play().catch(() => {});
-        }, { once: true });
-        video.play().catch(() => {});
-      });
+      document.querySelectorAll('.case-video').forEach(video => video.play().catch(() => {}));
     }
   }
 
